@@ -4,15 +4,7 @@ import struct
 from Crypto.Cipher import AES
 
 def a32_to_str(numbers):
-	out = ""
-
-	for number in numbers:
-		out += chr((number >> 24) & 0xff)
-		out += chr((number >> 16) & 0xff)
-		out += chr((number >>  8) & 0xff)
-		out += chr(number & 0xff)
-
-	return out.encode("hex")
+	return struct.pack(">" + "L"*len(numbers), *numbers).encode("hex")
 
 def str_to_a32(data):
 	data += "\x00" * (4-(len(data) % 4))
